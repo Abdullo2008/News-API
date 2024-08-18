@@ -7,7 +7,7 @@ from .models import NewsModel, Category
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsModel
-        fields = ['title', 'body', 'category']
+        fields = ['id', 'title', 'body', 'category']
         # fields = ['title', 'body', 'category']
         # extra_kwargs = {
         #     'title': {'required': False},
