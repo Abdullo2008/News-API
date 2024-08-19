@@ -6,6 +6,7 @@ from drf_yasg.views import get_schema_view
 
 from rest_framework import permissions
 
+from yangiliklarapp.views import news_router, category_router
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -22,7 +23,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('yangiliklarapp.urls')),
+    path('api/v1/', include(news_router.urls)),
+    path('api/v1/', include(category_router.urls)),
     # Swagger
     path('swagger/', schema_view.with_ui(
         'swagger', cache_timeout=0), name="swagger-swagger-ui"),

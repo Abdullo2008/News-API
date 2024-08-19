@@ -1,6 +1,7 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status, viewsets, routers, mixins
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
@@ -324,34 +325,69 @@ from .serializers import NewsSerializer, CategorySerializer
 #     serializer_class = NewsSerializer
 
 
-class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
-                  mixins.RetrieveModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.DestroyModelMixin,
-                  mixins.ListModelMixin,
-                  GenericViewSet):
-    queryset = NewsModel.objects.all()
-    serializer_class = NewsSerializer
+# class MyCustomRouter(routers.SimpleRouter):  # SimpleRouter
+#     routes = [
+#         routers.Route(url=r'^{prefix}$',
+#                       mapping={'get': 'list'},
+#                       name='{basename}-list',
+#                       detail=False,
+#                       initkwargs={'suffix': 'list'}),
+#         routers.Route(url=r'^{prefix}/{lookup}$',
+#                       mapping={'get': 'retrieve'},
+#                       name='{basename}-detail',
+#                       detail=True,
+#                       initkwargs={'suffix': 'Detail'})
+#     ]
 
 
-news_router = routers.SimpleRouter()
-news_router.register(r'news', NewsViewSet)
-
-
-# class CategoryViewSet(viewsets.ModelViewSet):
+# class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
+#                   mixins.RetrieveModelMixin,
+#                   mixins.UpdateModelMixin,
+#                   mixins.DestroyModelMixin,
+#                   mixins.ListModelMixin,
+#                   GenericViewSet):
+#     # queryset = NewsModel.objects.all()  # it will stay in commentary if there's get_queryset
+#     serializer_class = NewsSerializer
+#
+#     def get_queryset(self):
+#         pk = self.kwargs.get('pk')
+#
+#         if not pk:
+#             return NewsModel.objects.all()
+#
+#         return NewsModel.objects.filter(pk=pk)
+#
+#     # returns list of category
+#     @action(methods=['get'], detail=False)
+#     def category(self, request):
+#         category = Category.objects.all()
+#         return Response({"categorys": [c.name for c in category]})
+#
+#     # retrieves one category
+#     @action(methods=['get'], detail=True)
+#     def category(self, request, pk=None):
+#         category = Category.objects.get(pk=pk)
+#         return Response({'category': category.name})
+#
+#
+# news_router = routers.DefaultRouter()
+# news_router.register(r'news', NewsViewSet, basename='news')  # basename optional
+#
+#
+# # class CategoryViewSet(viewsets.ModelViewSet):
+# #     queryset = Category.objects.all()
+# #     serializer_class = CategorySerializer
+#
+#
+# class CategoryViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
+#                       mixins.RetrieveModelMixin,
+#                       mixins.UpdateModelMixin,
+#                       mixins.DestroyModelMixin,
+#                       mixins.ListModelMixin,
+#                       GenericViewSet):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
-
-
-class CategoryViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
-                      mixins.RetrieveModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      mixins.ListModelMixin,
-                      GenericViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-category_router = routers.SimpleRouter()
-category_router.register(r'category', CategoryViewSet)
+#
+#
+# category_router = routers.SimpleRouter()
+# category_router.register(prefix=r'category', viewset=CategoryViewSet)
