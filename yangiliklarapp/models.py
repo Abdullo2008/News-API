@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from rest_framework.authtoken.admin import User
 
 
 class Category(models.Model):

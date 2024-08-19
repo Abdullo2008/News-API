@@ -13,48 +13,43 @@ from .serializers import NewsSerializer, CategorySerializer
 # class NewsAPIView(generics.ListAPIView):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
-
-
+#
+#
 # class NewsRetrieveView(generics.RetrieveAPIView):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
-
-
+#
+#
 # class NewsCreateAPIView(generics.CreateAPIView):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
-
-
+#
+#
 # class NewsUpdateAPIView(generics.UpdateAPIView):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
-
-
+#
+#
 # class NewsDeleteAPIView(generics.DestroyAPIView):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
-
-
+#
+#
 # class CategoryAPIView(generics.ListAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
-
-
-# class NewsRetrieveView(generics.RetrieveAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
-
-
+#
+#
 # class CategoryCreateAPIView(generics.ListAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
-
-
+#
+#
 # class CategoryUpdateAPIView(generics.UpdateAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
-
-
+#
+#
 # class CategoryDeleteAPIView(generics.DestroyAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
@@ -319,7 +314,7 @@ from .serializers import NewsSerializer, CategorySerializer
 #                 status=status.HTTP_404_NOT_FOUND
 #             )
 
-
+# View Sets
 # class NewsViewSet(viewsets.ModelViewSet):
 #     queryset = NewsModel.objects.all()
 #     serializer_class = NewsSerializer
