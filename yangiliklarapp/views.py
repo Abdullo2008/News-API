@@ -347,22 +347,22 @@ class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
     def get_queryset(self):
         pk = self.kwargs.get('pk')
 
-        if not pk:
-            return NewsModel.objects.all()
+        if pk:
+            return NewsModel.objects.filter(pk=pk)
 
-        return NewsModel.objects.filter(pk=pk)
+        return NewsModel.objects.all()
 
     # returns list of category
-    @action(methods=['get'], detail=False)
-    def category(self, request):
-        category = Category.objects.all()
-        return Response({"categorys": [c.name for c in category]})
-
-    # retrieves one category
-    @action(methods=['get'], detail=True)
-    def category(self, request, pk=None):
-        category = Category.objects.get(pk=pk)
-        return Response({'category': category.name})
+    # @action(methods=['get'], detail=False)
+    # def category(self, request):
+    #     category = Category.objects.all()
+    #     return Response({"categorys": [c.name for c in category]})
+    #
+    # # retrieves one category
+    # @action(methods=['get'], detail=True)
+    # def category(self, request, pk=None):
+    #     category = Category.objects.get(pk=pk)
+    #     return Response({'category': category.name})
 
 
 news_router = routers.DefaultRouter()

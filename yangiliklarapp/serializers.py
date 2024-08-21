@@ -40,6 +40,7 @@ class NewsSerializer(serializers.ModelSerializer):
                         'message': 'Yangilik sarlavhasi mavjud! Iltimos boshqa sarlavha yozing'
                     }
                 )
+        return data
 
 
 # class NewsSerializer(serializers.Serializer):
@@ -75,10 +76,11 @@ class CategorySerializer(serializers.ModelSerializer):
                                 }
                             )
         if name:
-            if NewsModel.objects.filter(name=name).exists():
+            if Category.objects.filter(name=name).exists():
                 raise ValidationError(
                     {
                         'status': False,
                         'message': 'Ushbu kategoriya nomi mavjud!'
                     }
                 )
+        return data
