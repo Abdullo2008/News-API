@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+
 
 
 class Category(models.Model):
@@ -19,6 +21,7 @@ class NewsModel(models.Model):
     publish_time = models.DateTimeField(default=timezone.now())
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE)
     objects = models.Manager()
 
     class Meta:

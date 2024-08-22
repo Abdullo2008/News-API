@@ -5,9 +5,11 @@ from .models import NewsModel, Category
 
 
 class NewsSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = NewsModel
-        fields = ['id', 'title', 'body', 'category']
+        fields = ['id', 'title', 'body', 'category', 'user']
         # fields = ['title', 'body', 'category']
         # extra_kwargs = {
         #     'title': {'required': False},

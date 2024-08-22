@@ -5,34 +5,39 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 
 from .models import NewsModel, Category
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import NewsSerializer, CategorySerializer
 
 
-# class NewsAPIView(generics.ListAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
-#
-#
-# class NewsRetrieveView(generics.RetrieveAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
-#
-#
-# class NewsCreateAPIView(generics.CreateAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
-#
-#
-# class NewsUpdateAPIView(generics.UpdateAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
-#
-#
-# class NewsDeleteAPIView(generics.DestroyAPIView):
-#     queryset = NewsModel.objects.all()
-#     serializer_class = NewsSerializer
+class NewsAPIView(generics.ListCreateAPIView):
+    queryset = NewsModel.objects.all()
+    serializer_class = NewsSerializer
+    # permission_classes = (IsAuthenticatedOrReadOnly, )
+
+
+class NewsRetrieveView(generics.RetrieveAPIView):
+    queryset = NewsModel.objects.all()
+    serializer_class = NewsSerializer
+
+
+class NewsCreateAPIView(generics.CreateAPIView):
+    queryset = NewsModel.objects.all()
+    serializer_class = NewsSerializer
+
+
+class NewsUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = NewsModel.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = (IsOwnerOrReadOnly, )
+
+
+class NewsDeleteAPIView(generics.RetrieveDestroyAPIView):
+    queryset = NewsModel.objects.all()
+    serializer_class = NewsSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 #
 #
 # class CategoryAPIView(generics.ListAPIView):
@@ -320,37 +325,37 @@ from .serializers import NewsSerializer, CategorySerializer
 #     serializer_class = NewsSerializer
 
 
-class MyCustomRouter(routers.SimpleRouter):  # SimpleRouter
-    routes = [
-        routers.Route(url=r'^{prefix}$',
-                      mapping={'get': 'list'},
-                      name='{basename}-list',
-                      detail=False,
-                      initkwargs={'suffix': 'list'}),
-        routers.Route(url=r'^{prefix}/{lookup}$',
-                      mapping={'get': 'retrieve'},
-                      name='{basename}-detail',
-                      detail=True,
-                      initkwargs={'suffix': 'Detail'})
-    ]
+# class MyCustomRouter(routers.SimpleRouter):  # SimpleRouter
+#     routes = [
+#         routers.Route(url=r'^{prefix}$',
+#                       mapping={'get': 'list'},
+#                       name='{basename}-list',
+#                       detail=False,
+#                       initkwargs={'suffix': 'list'}),
+#         routers.Route(url=r'^{prefix}/{lookup}$',
+#                       mapping={'get': 'retrieve'},
+#                       name='{basename}-detail',
+#                       detail=True,
+#                       initkwargs={'suffix': 'Detail'})
+#     ]
 
 
-class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
-                  mixins.RetrieveModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.DestroyModelMixin,
-                  mixins.ListModelMixin,
-                  GenericViewSet):
-    # queryset = NewsModel.objects.all()  # it will stay in commentary if there's get_queryset
-    serializer_class = NewsSerializer
+# class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
+#                   mixins.RetrieveModelMixin,
+#                   mixins.UpdateModelMixin,
+#                   mixins.DestroyModelMixin,
+#                   mixins.ListModelMixin,
+#                   GenericViewSet):
+#     # queryset = NewsModel.objects.all()  # it will stay in commentary if there's get_queryset
+#     serializer_class = NewsSerializer
+#
+#     def get_queryset(self):
+#         pk = self.kwargs.get('pk')
+#
+#         if pk:
+#             return NewsModel.objects.filter(pk=pk)
 
-    def get_queryset(self):
-        pk = self.kwargs.get('pk')
-
-        if pk:
-            return NewsModel.objects.filter(pk=pk)
-
-        return NewsModel.objects.all()
+        # return NewsModel.objects.all()
 
     # returns list of category
     # @action(methods=['get'], detail=False)
@@ -365,8 +370,8 @@ class NewsViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
     #     return Response({'category': category.name})
 
 
-news_router = routers.DefaultRouter()
-news_router.register(r'news', NewsViewSet, basename='news')  # basename optional
+# news_router = routers.DefaultRouter()
+# news_router.register(r'news', NewsViewSet, basename='news')  # basename optional
 
 
 # class CategoryViewSet(viewsets.ModelViewSet):
@@ -374,15 +379,15 @@ news_router.register(r'news', NewsViewSet, basename='news')  # basename optional
 #     serializer_class = CategorySerializer
 
 
-class CategoryViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
-                      mixins.RetrieveModelMixin,
-                      mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      mixins.ListModelMixin,
-                      GenericViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-category_router = routers.SimpleRouter()
-category_router.register(prefix=r'category', viewset=CategoryViewSet)
+# class CategoryViewSet(mixins.CreateModelMixin,  # viewsets.ModelViewSet
+#                       mixins.RetrieveModelMixin,
+#                       mixins.UpdateModelMixin,
+#                       mixins.DestroyModelMixin,
+#                       mixins.ListModelMixin,
+#                       GenericViewSet):
+#     queryset = Category.objects.all()
+#     serializer_class = CategorySerializer
+#
+#
+# category_router = routers.SimpleRouter()
+# category_router.register(prefix=r'category', viewset=CategoryViewSet)
