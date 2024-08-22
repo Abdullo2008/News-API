@@ -5,7 +5,10 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 
 from rest_framework import permissions
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView, TokenVerifyView,
+)
 # from yangiliklarapp.views import news_router, category_router
 
 
@@ -28,6 +31,9 @@ urlpatterns = [
     path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     # path('api/v1/', include(news_router.urls)),
     # path('api/v1/', include(category_router.urls)),
     # Swagger

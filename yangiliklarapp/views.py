@@ -33,7 +33,7 @@ class NewsUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (TokenAuthentication, )
+    # authentication_classes = (TokenAuthentication, )
 
 
 class NewsDeleteAPIView(generics.RetrieveDestroyAPIView):
