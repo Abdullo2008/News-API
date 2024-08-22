@@ -15,7 +15,7 @@ from .serializers import NewsSerializer, CategorySerializer
 class NewsAPIView(generics.ListCreateAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
-    # permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
 
 class NewsRetrieveView(generics.RetrieveAPIView):

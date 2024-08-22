@@ -25,6 +25,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('yangiliklarapp.urls')),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
     # path('api/v1/', include(news_router.urls)),
     # path('api/v1/', include(category_router.urls)),
     # Swagger
