@@ -5,7 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 from .models import NewsModel, Category
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
@@ -31,7 +32,8 @@ class NewsCreateAPIView(generics.CreateAPIView):
 class NewsUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (TokenAuthentication, )
 
 
 class NewsDeleteAPIView(generics.RetrieveDestroyAPIView):
