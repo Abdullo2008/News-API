@@ -2,6 +2,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status, viewsets, routers, mixins
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
@@ -13,10 +14,17 @@ from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import NewsSerializer, CategorySerializer
 
 
+class NewsAPIListPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
+
 class NewsAPIView(generics.ListCreateAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = NewsAPIListPagination
 
 
 class NewsRetrieveView(generics.RetrieveAPIView):

@@ -24,8 +24,8 @@ class NewsModel(models.Model):
     user = models.ForeignKey(User, verbose_name='user', on_delete=models.CASCADE)
     objects = models.Manager()
 
-    class Meta:
-        ordering = ["-publish_time"]
+    # class Meta:
+    #     ordering = ["-publish_time"]
 
     def __str__(self):
         return self.title
